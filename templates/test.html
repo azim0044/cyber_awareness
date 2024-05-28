@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card with Input and Output</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Progressbar.js CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/progressbar.js@1.1.0/dist/progressbar.min.css">
+    <style>
+        .output-category {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+
+        .output-header {
+            display: flex;
+            align-items: center;
+            color: #007bff;
+        }
+
+        .output-label {
+            margin-right: 10px;
+        }
+
+        .output-text {
+            margin-top: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container mt-5" style="max-width: 1340px;">
+        <div class="card">
+            <div class="card-body">
+                <input type="text" class="form-control" id="inputText">
+                <button type="button" class="btn btn-primary" data-toggle="modal" onclick="submitInput()"
+                    data-target=".bd-example-modal-lg">Large modal</button>
+
+                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+                    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div id="outputCategories" class="output-container">
+                                <!-- Output category labels, circular progress bars, and output text will be dynamically added here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Progressbar.js -->
+    <script src="https://cdn.jsdelivr.net/npm/progressbar.js@1.1.0/dist/progressbar.min.js"></script>
+    <script src="{{ url_for('static', filename='js/password-checker.js') }}"></script>
+
+
+    <!-- Bootstrap JS and Popper.js (required for Bootstrap) -->
+    <script src="https://code.j

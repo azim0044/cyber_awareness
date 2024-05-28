@@ -1,0 +1,36 @@
+[
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "views",
+        "description": "views",
+        "isExtraImport": true,
+        "detail": "views",
+        "documentation": {}
+    },
+    {
+        "label": "DatabaseRequest",
+        "kind": 6,
+        "importPath": "views.dbrequest",
+        "description": "views.dbrequest",
+        "peekOfCode": "class DatabaseRequest:\n    def __init__(self, mysql):\n        self.mysql = mysql\n    def get_detail(self, query_type, data):\n        cur = self.mysql.connection.cursor()\n        if query_type == 'GET_ACCOUNT':\n            USERNAME = data[0]\n            sql_query = \"\"\"\n                SELECT user_id, user_name, user_email, user_password, account_status FROM users WHERE user_username = %s;\n            \"\"\"",
+        "detail": "views.dbrequest",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app = Flask(__name__)\nfrom views import *\nif __name__ == '__main__':\n    app.run(debug=True, host='0.0.0.0', port=5050)",
+        "detail": "app",
+        "documentation": {}
+    }
+]

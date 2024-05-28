@@ -1,0 +1,98 @@
+{% extends '/user/base.html' %}
+{% block styles %}
+<style>
+  .img {
+    max-width: 30%;
+    /* Set the maximum width of the image to its container width */
+    height: auto;
+    /* Maintain the aspect ratio of the image */
+    display: block;
+    /* Remove any extra spacing below the image */
+    margin: auto;
+    /* Center the image horizontally */
+  }
+
+  .no-data-text {
+    text-align: center;
+    margin-top: 10px;
+  }
+  .custom-card {
+    max-width: 500px;  /* Adjust this value as needed */
+  }
+
+
+</style>
+{% endblock %}
+{% block content %}
+<section class="main">
+
+  <section class="main-course">
+    <h3 class="text-black">Home</h3>
+    <div class="container d-flex justify-content-center">
+      <div class="col row-cols-1 row-cols-md-2 row-cols-xl-4 custom-card">
+        <div class="col">
+          <div class="card radius-10 border-start border-0 border-3 border-info ">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div>
+                  <p class="mb-0 text-secondary">All Topics</p>
+                  <h4 class="my-1 text-info">{{total_count}}</h4>
+                </div>
+                <div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto"><i
+                    class="fa fa-book"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card radius-10 border-start border-0 border-3 border-warning">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div>
+                  <p class="mb-0 text-secondary">Finished Topic</p>
+                  <h4 class="my-1 text-warning">{{completed_count}}</h4>
+                </div>
+                <div class="widgets-icons-2 rounded-circle bg-gradient-blooker text-white ms-auto"><i
+                    class="fa fa-clipboard-check"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card radius-10 border-start border-0 border-3 border-success">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div>
+                  <p class="mb-0 text-secondary">Passed Topic</p>
+                  <h4 class="my-1 text-success">{{pass_count}}</h4>
+                </div>
+                <div class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto"><i
+                    class="fa fa-check"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card radius-10 border-start border-0 border-3 border-danger">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div>
+                  <p class="mb-0 text-secondary">Failed Topic</p>
+                  <h4 class="my-1 text-danger">{{fail_count}}</h4>
+                </div>
+                <div class="widgets-icons-2 rounded-circle bg-gradient-bloody text-white ms-auto"><i
+                    class="fa fa-times"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+  </section>
+</section>
+{% endblock %}

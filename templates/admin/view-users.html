@@ -1,0 +1,153 @@
+{% extends '/admin/base.html' %}
+{% block styles %}
+<style>
+    hr {
+        border: none;
+        height: 2px;
+        color: #333;
+        /* or any color you prefer */
+        background-color: #333;
+        /* or any color you prefer */
+    }
+</style>
+{% endblock %}
+{% block content %}
+<section class="main">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{category}} mt-3" id="alert">
+        {{ message }}
+    </div>
+    <script>
+        setTimeout(function () {
+            document.getElementById('alert').style.display = 'none';
+        }, 2000);
+    </script>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div class="main-top mb-4">
+        <h3>View Material</h3>
+        <i class="fas fa-user-cog"></i>
+    </div>
+    <div class="card shadow mb-4">
+        <h5 class="card-header">Registered Material</h5>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>User Id</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Username</th>
+                            <th>Completed Module</th>
+                            <th>Edit User</th>
+                            <th>Download Report</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for user in get_all_user %}
+                        <tr>
+                            <td>{{ user.user_id }}</td>
+                            <td>{{ user.user_name }}</td>
+                            <td>{{ user.user_email }}</td>
+                            <td>{{ user.user_username }}</td>
+
+                        
+                            <td>{{user.completed_topic}} / {{get_count_all_topic}}</td>
+
+                            <td>
+                                <button type="button" class="btn btn-primary view-more-button" data-toggle="modal"
+                                    data-target="#viewMoreModal{{ loop.index }}"><i class="fas fa-edit"></i></button>
+                            </td>
+                            <td>
+                                <a class="btn btn-primary" href="{{ url_for('admin.admin_generate_report', user_id=user.user_id) }}"><i class="fas fa-download"></i></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% for user in get_all_user %}
+            <div class="modal fade" id="viewMoreModal{{ loop.index }}" tabindex="-1" role="dialog"
+                aria-labelledby="viewMoreModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="viewMoreModalLabel">User Details</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="card shadow mb-3">
+                                <div class="card-body">
+                                    <form action="{{ url_for('admin.admin_view_users') }}" method="POST">
+                    <input id="csrf_token" name="csrf_token" type="hidden" value="{{ csrf_token() }}">
+                                        
+                                        <div class="form-group">
+                                            <label for="user-id">User Id</label>
+                                            <input type="text" class="form-control" value="{{user.user_id}}" disabled>
+                                            <input type="hidden" name="user-id" class="form-control"
+                                                value="{{user.user_id}}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="user-fullname">Full Name</label>
+                                            <input type="text" name="user-fullname" class="form-control"
+                                                value="{{user.user_name}}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="user-email">Email</label>
+                                            <input type="text" name="user-email" class="form-control"
+                                                value="{{user.user_email}}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="user-username">Username</label>
+                                            <input type="text" name="user-username" class="form-control"
+                                                value="{{user.user_username}}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="user-password">Password</label>
+                                            <input type="password" name="user-password" class="form-control"
+                                                value="{{user.user_password}}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <button type="submit" name="edit-button"
+                                                class="btn btn-primary btn-sm btn-block">Edit
+                                                User</button>
+                                            <button type="submit" name="delete-button"
+                                                class="btn btn-danger btn-sm btn-block">Delete
+                                                User</button>
+                                            {% if user.account_status == 0 %}
+                                            <button type="submit" name="activate-button"
+                                                class="btn btn-info btn-sm btn-block">Activate User</button>
+                                            {% else %}
+                                            <button type="submit" name="deactivate-button"
+                                                class="btn btn-warning btn-sm btn-block">Deactivate User</button>
+                                            {% endif %}
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</section>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

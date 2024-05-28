@@ -1,0 +1,105 @@
+$white:#fff;
+$blue : #249DD4;
+$grey : #F6F6F6;
+$light-blue:#DCEEFA;
+
+@mixin box-sizing($type) {
+  -moz-box-sizing: $type;
+  -webkit-box-sizing: $type;
+  box-sizing: $type;
+}
+@mixin border-radius($data){
+	-webkit-border-radius: $data $data $data $data;
+	border-radius: $data $data $data $data;
+}
+@mixin transition($property,$time,$type ){
+	-webkit-transition: $property $time $type;
+	-moz-transition: $property $time $type;
+	-ms-transition: $property $time $type;
+	-o-transition: $property $time $type;
+	transition: $property $time $type;
+}
+@mixin box-shadow(){
+	-webkit-box-shadow: 0px 0px 20px 0px rgba(50, 50, 50, 0.30);
+	-moz-box-shadow:    0px 0px 20px 0px rgba(50, 50, 50, 0.30);
+	box-shadow:         0px 0px 20px 0px rgba(50, 50, 50, 0.30);
+}
+#circle-container{
+	width: 200px;
+	margin: 20px auto;
+}
+.q{
+	font-family:Helvetica,Arial,sans-serif;
+	@include box-sizing(border-box);
+	background-color:$grey;
+	margin:0 auto;
+	width:800px;
+	border:none;
+	padding:40px;
+	overflow:hidden;
+	legend{
+		@include box-sizing(border-box);
+		text-align:center;
+		width:100%;
+		padding-bottom:20px;
+		background-color:$grey;
+		font-size:20px;
+	}
+	input[type="radio"] + label{
+		@include box-sizing(border-box);
+		float:left;
+		display:block;
+		width:50%;
+		text-align:center;
+		span{
+			@include box-shadow();
+			@include border-radius(10px);
+			display:block;
+			margin:0 auto;
+			width:80%;
+			padding:20px;
+			background-color:$white;
+			margin-bottom:10px;
+			&:hover{
+				background-color:$light-blue;
+				color:#000;
+			}
+		}
+	}
+	input[type="radio"]:checked + label span{
+		background-color:$blue;
+		color:$white;
+	}
+	input[type="radio"]{
+		position:absolute;
+		left:-9999px;
+	}
+	.button-space{
+		clear:both;
+		height: 27px;
+		padding-top:20px;
+	}
+	.next{
+		display:block;
+		margin-left:auto;
+		margin-right:auto;
+		background-color:rgba(0,0,0,0);
+		@include border-radius(15px);
+		border:solid 2px $blue;
+		color:$blue;
+		font-size:16px;
+		padding:2px 25px;
+		text-transform:uppercase;
+	}
+}
+.disabled{
+	display:none;
+}
+.end{
+	text-align: center;
+	font-family:Helvetica,arial,sans-serif;
+	font-size:50px;
+	color:#047E3C;
+}
+
+

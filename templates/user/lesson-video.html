@@ -1,0 +1,128 @@
+{% extends '/user/base.html' %}
+
+{% block content %}
+<section class="main">
+
+
+    <div class="card-container d-flex justify-content-center " style="margin-top: 70px;">
+        <div class="card custom-shadow" style="width: 80rem; height: 55rem; border-radius: 15px; overflow: hidden;">
+            <div class="card-body d-flex flex-column justify-content-between" style="background-color: #f8f9fa;">
+                <div>
+                    <h2 class="card-title text-success" style="font-weight: bold;">{{get_course_lesson.topic_title}}
+                    </h2>
+                    <hr style="border-top: 2px solid rgba(0,0,0,.1);">
+                    <div class="card-text d-flex justify-content-center align-items-center mt-4"
+                        style="color: #6c757d; height: 80%;">
+                        <div style="margin-top: 20px; width: 100%; height: 100%;">
+                            <video class="video-js vjs-default-skin vjs-16-9" id="video-lesson-iframe" controls style="width: 100%; height: 100%; background-color: transparent;
+                                ">
+                                <source
+                                    src="{{ url_for('static', filename='uploads/topic_video/' + get_course_lesson.topic_video) }}"
+                                    type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex">
+                    <div class="mr-auto p-2">
+                        <a href="{{ url_for('user.lesson', topic_id=get_course_lesson.topic_id) }}"
+                            class="btn btn-success"
+                            style=" font-weight: bold; border-radius: 15px;">
+                            Back To Lesson Overview
+                        </a>
+                    </div>
+                    <div class="p-2">
+                        <form action="{{ url_for('user.quiz', topic_id=get_course_lesson.topic_id) }}" , method="GET">
+                            <button type="submit" id="start-button" class="btn btn-primary"
+                                style=" font-weight: bold; border-radius: 15px; background-color: #17a2b8;">
+                                Start Quiz
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="overlay" style="display:none"></div>
+</section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var player = videojs('video-lesson-iframe', { nativeControlsForTouch: true });
+        var modal = $('#exampleModalCenter');
+        var randomTime;
+        var previousTime = 0;
+
+        player.ready(function () {
+            this.on('loadedmetadata', function () {
+                console.log('loadedmetadata');
+                var halfDuration = this.duration() / 2;
+                randomTime = Math.random() * halfDuration + halfDuration;
+                console.log('randomTime', randomTime);
+                this.on('timeupdate', function () {
+                    if (this.currentTime() > randomTime) {
+                        console.log('show modal');
+                        this.pause(); // Pause the video
+                        $('#overlay').show(); // Show the overlay
+                        modal.modal('show');
+                        this.off('timeupdate');
+                    }
+                });
+
+                // Update previousTime every second
+                setInterval(() => {
+                    previousTime = this.currentTime();
+                }, 1000);
+
+                // Prevent seeking forward
+                this.on('seeking', function () {
+                    if (this.currentTime() > previousTime) {
+                        this.currentTime(previousTime);
+                    }
+                });
+
+                modal.on('hidden.bs.modal', function () {
+                    player.play();
+                    $('#overlay').hide(); // Hide the overlay
+                });
+            });
+
+            this.on('ended', function () {
+                document.getElementById('start-button').style.display = 'block';
+            });
+        });
+
+        // When the modal is hidden, resume the video and remove the blur
+        modal.on('hidden.bs.modal', function () {
+            player.play();
+            $('body').removeClass('blur');
+        });
+
+        $(document).delegate(".panel-understanding-check .radio input", "click", function () {
+            var dataQuestionNumber = "#" + $(this).data("question-number");
+            $(dataQuestionNumber).removeClass("hidden");
+            var alertContent = $(this).data("comment");
+            var alertType = $(this).data("alert-type");
+            $(dataQuestionNumber).html(alertContent);
+            $(dataQuestionNumber).removeClass("alert-danger").removeClass("alert-warning").removeClass("alert-success").addClass(alertType);
+
+            // If the answer is correct, start a countdown and then close the modal
+            if (alertType === 'alert-success') {
+                var countdown = 3;
+                var countdownDisplay = $('<p>').appendTo(dataQuestionNumber);
+                var countdownInterval = setInterval(function () {
+                    countdownDisplay.text('Question will close and the video will be continue in ' + countdown);
+                    countdown--;
+                    if (countdown < 0) {
+                        clearInterval(countdownInterval);
+                        modal.modal('hide');
+                    }
+                }, 1000);
+            }
+        });
+    });
+</script>
+{% endblock %}

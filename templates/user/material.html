@@ -1,0 +1,37 @@
+{% extends '/user/base.html' %}
+
+{% block content %}
+
+<section class="main">
+
+    <h3>Module</h3>
+    <div class="card-container d-flex justify-content-center">
+        {% for material in get_material %}
+        <div class="card custom-shadow mt-4 d-flex flex-column" style="height: 300px; width: 800px;">
+            <h5 class="card-header bg-success text-white">Topic {{material.topic_id}}</h5>
+            <div class="card-body d-flex flex-column justify-content-between">
+                <div>
+                    <h5 class="card-title">{{material.topic_title}}</h5>
+                    <p class="text-muted">
+                        {{material.topic_description}}
+                    </p>
+                </div>
+
+                <div class="row">
+                    <div class="col-0">
+                        <div class="mt-auto ml-3">
+                            <a href="{{ url_for('user.lesson', topic_id=material.topic_id) }}"
+                                class="btn btn-success text-white">View Material</a>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</section>
+
+{% endblock %}

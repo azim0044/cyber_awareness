@@ -1,0 +1,118 @@
+{% extends '/admin/base.html' %}
+{% block styles %}
+
+{% endblock %}
+{% block content %}
+<section class="main">
+  <section class="main-course">
+    <h3></h3>
+    <div class="container mt-5">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
+        <div class="col">
+          <div class="card radius-10 border-start border-0 border-3 border-info">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div>
+                  <p class="mb-0 text-secondary">All Topics</p>
+                  <h4 class="my-1 text-info">{{get_count_all_topic}}</h4>
+                </div>
+                <div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto"><i
+                    class="fa fa-book"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card radius-10 border-start border-0 border-3 border-warning">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div>
+                  <p class="mb-0 text-secondary">All User Account</p>
+                  <h4 class="my-1 text-warning">{{total_user}}</h4>
+                </div>
+                <div class="widgets-icons-2 rounded-circle bg-gradient-blooker text-white ms-auto"><i
+                    class="fa fa-users"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card radius-10 border-start border-0 border-3 border-success">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div>
+                  <p class="mb-0 text-secondary">Verify Account</p>
+                  <h4 class="my-1 text-success">{{activate_acc}}</h4>
+                </div>
+                <div class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto"><i
+                    class="fa fa-check"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card radius-10 border-start border-0 border-3 border-danger">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div>
+                  <p class="mb-0 text-secondary">Unverify Account</p>
+                  <h4 class="my-1 text-danger">{{unactivate_acc}}</h4>
+                </div>
+                <div class="widgets-icons-2 rounded-circle bg-gradient-bloody text-white ms-auto"><i
+                    class="fa fa-times"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class=" d-flex justify-content-center">
+      <div class="course-box " style="height: auto; width: 60%; ">
+
+        <ul>
+          <li>Recently Add Topic</li>
+        </ul>
+        <div class="course">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped table-bordered table-smaller" width="100%" cellspacing="0">
+                <thead class="thead-dark">
+                  <tr>
+                    <th>Topic Id</th>
+                    <th>Topic Title</th>
+                    <th>Upload Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for topic in get_all_topic %}
+                  <tr>
+                    <td>{{ topic.topic_id }}</td>
+                    <td>{{ topic.topic_title }}</td>
+                    <td>{{ topic.topic_upload_date.strftime('%d, %A, %Y') }}</td>
+                  </tr>
+                  {% else %}
+                  <tr>
+                    <td colspan="6">
+                      <img src="{{ url_for('static', filename='img/notfound.svg') }}" alt="No data" class="img" />
+                      <p class="no-data-text">You're not added any topic yet !</p>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

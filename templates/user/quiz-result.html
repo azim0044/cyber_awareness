@@ -1,0 +1,102 @@
+{% extends '/user/base.html' %}
+{%block styles%}
+<style>
+
+    h1 {
+        color: #88B04B;
+        font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+        font-weight: 900;
+        font-size: 40px;
+        margin-bottom: 10px;
+    }
+
+    p {
+        color: #404F5E;
+        font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+        font-size: 20px;
+        margin: 0;
+    }
+
+    .card>div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .passed {
+        color: #9ABC66;
+        font-size: 100px;
+    }
+
+    .failed {
+        color: #f10606;
+        font-size: 100px;
+    }
+
+    .card {
+        background: white;
+        padding: 60px;
+        border-radius: 4px;
+        box-shadow: 0 2px 3px #C8D0D8;
+        display: inline-block;
+        margin: 0 auto;
+        text-align: center;
+        /* Add this line */
+    }
+    .center-screen {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Full height of the viewport */
+        margin: 0;
+        padding: 0;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<section class="main">
+
+    <h3>Quiz Result</h3>
+
+    {% if  session['score'] >= 8 %}
+    <div class="container-fluid">
+        <div class="card d-block mx-5">
+            <div style="border-radius:200px; height:200px; max-width:200px; background: #F8FAF5; margin:0 auto;">
+                <i class="passed">✓</i>
+            </div>
+            <h1>Passed {{ session['score']}}/10</h1>
+            <p>Congratulations! You've demonstrated a strong understanding of password security. <br /> Keep up the good
+                work in staying vigilant online!</p>
+
+            <div class="d-flex">
+                <div class="p-2">
+                    <a  href="{{url_for('user.user_material')}}" class="btn btn-primary next-button">Go to Material</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="container-fluid ">
+        <div class="card d-block mx-5">
+            <div style="border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto;">
+                <i class="failed">✘</i>
+            </div>
+            <h1>Failed {{ session['score']}}/10</h1>
+            <p>Don't worry if you didn't pass this time. <br /> Cybersecurity is an ongoing learning process. Review the
+                quiz, brush up on your knowledge, and try again. </p>
+            <div class="d-flex">
+                <div class="p-2">
+                    <a href="{{url_for('user.lesson', topic_id=session['topic_id'])}}" class="btn btn-primary back-button">Retake Quiz</a>
+                </div>
+                <div class="p-2">
+                    <a  href="{{url_for('user.user_material')}}" class="btn btn-primary next-button">Go to Material</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

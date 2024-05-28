@@ -1,0 +1,537 @@
+{% extends '/admin/base.html' %}
+{% block styles %}
+<style>
+  hr {
+    border: none;
+    height: 2px;
+    color: #333;
+    /* or any color you prefer */
+    background-color: #333;
+    /* or any color you prefer */
+  }
+</style>
+{% endblock %}
+{% block content %}
+<section class="main">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  {% for category, message in messages %}
+  <div class="alert alert-{{category}} mt-3" id="alert">
+    {{ message }}
+  </div>
+  <script>
+    setTimeout(function () {
+      document.getElementById('alert').style.display = 'none';
+    }, 2000);
+  </script>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+  <div class="main-top mb-4">
+    <h3>Add Material</h3>
+    <i class="fas fa-user-cog"></i>
+  </div>
+  <div class="card custom-shadow">
+    <h5 class="card-header">Add Topic Question And Answer</h5>
+    <div class="card-body card-container">
+      <form action="{{url_for('admin.add_material')}}" method="POST" enctype="multipart/form-data">
+        <input id="csrf_token" name="csrf_token" type="hidden" value="{{ csrf_token() }}">
+
+        <div class="form-group">
+          <label for="topic-title">Topic Title</label>
+          <input type="text" name="topic-title" class="form-control" id="topic-title" aria-describedby="emailHelp">
+        </div>
+        <div class="form-group">
+          <label for="topic-description">Topic Description</label>
+          <textarea name="topic-description" class="form-control" id="topic-description" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="topic-lesson">Topic Lesson</label>
+          <textarea name="topic-lesson" class="form-control" id="topic-lesson" rows="6"></textarea>
+        </div>
+        <div class="form-group">
+          <div class="mb-3">
+            <label for="formFile" class="form-label">Upload Topic Video</label>
+            <input name="topic-video" class="form-control" type="file" id="formFile" accept="video/*">
+          </div>
+        </div>
+        <hr>
+
+
+        <!-- Question 1 -->
+        <div class="form-group">
+          <div class="row">
+            <div class="col">
+              <label for="question-1">Question 1</label>
+              <textarea name="question-1" id="question-1" class="form-control" rows="6"></textarea>
+            </div>
+            <div class="col">
+              <label for="answer1-question1" aria-describedby="answer">Answer (Multiple choice format)</label>
+
+              <div class="input-group">
+                <span class="input-group-text" id="answer1">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="14" width="12.25" viewBox="0 0 448 512">
+                    <path fill="#60bc15"
+                      d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
+                  </svg>
+                </span>
+                <input id="answer1-question1" name="answer1-question1" type="text" class="form-control"
+                  placeholder="Answer 1" aria-describedby="answer1">
+              </div>
+
+              <div class="input-group">
+                <span class="input-group-text" id="answer2">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="14" width="10.5" viewBox="0 0 384 512">
+                    <path fill="#c21414"
+                      d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z" />
+                  </svg>
+                </span>
+                <input id="answer2-question1" name="answer2-question1" type="text" class="form-control"
+                  placeholder="Answer 2" aria-describedby="answer2">
+              </div>
+
+              <div class="input-group">
+                <span class="input-group-text" id="answer3">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="14" width="10.5" viewBox="0 0 384 512">
+                    <path fill="#c21414"
+                      d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z" />
+                  </svg>
+                </span>
+                <input id="answer3-question1" name="answer3-question1" type="text" class="form-control"
+                  placeholder="Answer 3" aria-describedby="answer3">
+              </div>
+
+
+              <div class="input-group">
+                <span class="input-group-text" id="answer4">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="14" width="10.5" viewBox="0 0 384 512">
+                    <path fill="#c21414"
+                      d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z" />
+                  </svg>
+                </span>
+                <input id="answer4-question1" name="answer4-question1" type="text" class="form-control"
+                  placeholder="Answer 4" aria-describedby="answer4">
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="form-group">
+          <div class="row">
+            <div class="col">
+              <label for="question-2">Question 2</label>
+              <textarea name="question-2" id="question-2" class="form-control" rows="6"></textarea>
+            </div>
+            <div class="col">
+              <label for="answer1-question2" aria-describedby="answer">Answer (Multiple choice format)</label>
+
+              <div class="input-group">
+                <span class="input-group-text" id="answer1">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="14" width="12.25" viewBox="0 0 448 512">
+                    <path fill="#60bc15"
+                      d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
+                  </svg>
+                </span>
+                <input id="answer1-question2" name="answer1-question2" type="text" class="form-control"
+                  placeholder="Answer 1" aria-describedby="answer1">
+              </div>
+
+              <div class="input-group">
+                <span class="input-group-text" id="answer2">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="14" width="10.5" viewBox="0 0 384 512">
+                    <path fill="#c21414"
+                      d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z" />
+                  </svg>
+                </span>
+                <input id="answer2-question2" name="answer2-question2" type="text" class="form-control"
+                  placeholder="Answer 2" aria-describedby="answer2">
+              </div>
+
+              <div class="input-group">
+                <span class="input-group-text" id="answer3">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="14" width="10.5" viewBox="0 0 384 512">
+                    <path fill="#c21414"
+                      d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z" />
+                  </svg>
+                </span>
+                <input id="answer3-question2" name="answer3-question2" type="text" class="form-control"
+                  placeholder="Answer 3" aria-describedby="answer3">
+              </div>
+
+              <div class="input-group">
+                <span class="input-group-text" id="answer4">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="14" width="10.5" viewBox="0 0 384 512">
+                    <path fill="#c21414"
+                      d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z" />
+                  </svg>
+                </span>
+                <input id="answer4-question2" name="answer4-question2" type="text" class="form-control"
+                  placeholder="Answer 4" aria-describedby="answer4">
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="form-group">
+          <div class="row">
+            <div class="col">
+              <label for="question-3">Question 3</label>
+              <textarea name="question-3" id="question-3" class="form-control" rows="6"></textarea>
+            </div>
+            <div class="col">
+              <label for="answer1-question3" aria-describedby="answer">Answer (Multiple choice format)</label>
+
+              <div class="input-group">
+                <span class="input-group-text" id="answer1">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="14" width="12.25" viewBox="0 0 448 512">
+                    <path fill="#60bc15"
+                      d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
+                  </svg>
+                </span>
+                <input id="answer1-question3" name="answer1-question3" type="text" class="form-control"
+                  placeholder="Answer 1" aria-describedby="answer1">
+              </div>
+
+              <div class="input-group">
+                <span class="input-group-text" id="answer2">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="14" width="10.5" viewBox="0 0 384 512">
+                    <path fill="#c21414"
+                      d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z" />
+                  </svg>
+                </span>
+                <input id="answer2-question3" name="answer2-question3" type="text" class="form-control"
+                  placeholder="Answer 2" aria-describedby="answer2">
+              </div>
+
+              <div class="input-group">
+                <span class="input-group-text" id="answer3">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="14" width="10.5" viewBox="0 0 384 512">
+                    <path fill="#c21414"
+                      d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z" />
+                  </svg>
+                </span>
+                <input id="answer3-question3" name="answer3-question3" type="text" class="form-control"
+                  placeholder="Answer 3" aria-describedby="answer3">
+              </div>
+
+              <div class="input-group">
+                <span class="input-group-text" id="answer4">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="14" width="10.5" viewBox="0 0 384 512">
+                    <path fill="#c21414"
+                      d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z" />
+                  </svg>
+                </span>
+                <input id="answer4-question3" name="answer4-question3" type="text" class="form-control"
+                  placeholder="Answer 4" aria-describedby="answer4">
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="form-group">
+          <div class="row">
+            <div class="col">
+              <label for="question-4">Question 4</label>
+              <textarea name="question-4" id="question-4" class="form-control" rows="6"></textarea>
+            </div>
+            <div class="col">
+              <label for="answer1-question4" aria-describedby="answer">Answer (Multiple choice format)</label>
+
+              <div class="input-group">
+                <span class="input-group-text" id="answer1">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="14" width="12.25" viewBox="0 0 448 512">
+                    <path fill="#60bc15"
+                      d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
+                  </svg>
+                </span>
+                <input id="answer1-question4" name="answer1-question4" type="text" class="form-control"
+                  placeholder="Answer 1" aria-describedby="answer1">
+              </div>
+
+              <div class="input-group">
+                <span class="input-group-text" id="answer2">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="14" width="10.5" viewBox="0 0 384 512">
+                    <path fill="#c21414"
+                      d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z" />
+                  </svg>
+                </span>
+                <input id="answer2-question4" name="answer2-question4" type="text" class="form-control"
+                  placeholder="Answer 2" aria-describedby="answer2">
+              </div>
+
+              <div class="input-group">
+                <span class="input-group-text" id="answer3">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="14" width="10.5" viewBox="0 0 384 512">
+                    <path fill="#c21414"
+                      d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z" />
+                  </svg>
+                </span>
+                <input id="answer3-question4" name="answer3-question4" type="text" class="form-control"
+                  placeholder="Answer 3" aria-describedby="answer3">
+              </div>
+
+              <div class="input-group">
+                <span class="input-group-text" id="answer4">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="14" width="10.5" viewBox="0 0 384 512">
+                    <path fill="#c21414"
+                      d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z" />
+                  </svg>
+                </span>
+                <input id="answer4-question4" name="answer4-question4" type="text" class="form-control"
+                  placeholder="Answer 4" aria-describedby="answer4">
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="form-group">
+          <div class="row">
+            <div class="col">
+              <label for="question-5">Question 5</label>
+              <textarea name="question-5" id="question-5" class="form-control" rows="6"></textarea>
+            </div>
+            <div class="col">
+              <label for="answer1-question5" aria-describedby="answer">Answer (Multiple choice format)</label>
+
+              <div class="input-group">
+                <span class="input-group-text" id="answer1">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="14" width="12.25" viewBox="0 0 448 512">
+                    <path fill="#60bc15"
+                      d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
+                  </svg>
+                </span>
+                <input id="answer1-question5" name="answer1-question5" type="text" class="form-control"
+                  placeholder="Answer 1" aria-describedby="answer1">
+              </div>
+
+              <div class="input-group">
+                <span class="input-group-text" id="answer2">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="14" width="10.5" viewBox="0 0 384 512">
+                    <path fill="#c21414"
+                      d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z" />
+                  </svg>
+                </span>
+                <input id="answer2-question5" name="answer2-question5" type="text" class="form-control"
+                  placeholder="Answer 2" aria-describedby="answer2">
+              </div>
+
+              <div class="input-group">
+                <span class="input-group-text" id="answer3">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="14" width="10.5" viewBox="0 0 384 512">
+                    <path fill="#c21414"
+                      d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z" />
+                  </svg>
+                </span>
+                <input id="answer3-question5" name="answer3-question5" type="text" class="form-control"
+                  placeholder="Answer 3" aria-describedby="answer3">
+              </div>
+
+              <div class="input-group">
+                <span class="input-group-text" id="answer4">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="14" width="10.5" viewBox="0 0 384 512">
+                    <path fill="#c21414"
+                      d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z" />
+                  </svg>
+                </span>
+                <input id="answer4-question5" name="answer4-question5" type="text" class="form-control"
+                  placeholder="Answer 4" aria-describedby="answer4">
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Question 6 -->
+        <div class="form-group">
+          <div class="row">
+            <div class="col">
+              <label for="question-6">Question 6</label>
+              <textarea name="question-6" id="question-6" class="form-control" rows="6"></textarea>
+            </div>
+            <div class="col">
+              <label for="answer1-question6" aria-describedby="answer">Answer (Multiple choice format)</label>
+
+              <div class="input-group">
+                <span class="input-group-text" id="answer1">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="14" width="12.25" viewBox="0 0 448 512">
+                    <path fill="#60bc15"
+                      d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
+                  </svg>
+                </span>
+                <input id="answer1-question6" name="answer1-question6" type="text" class="form-control"
+                  placeholder="Answer 1" aria-describedby="answer1">
+              </div>
+
+              <div class="input-group">
+                <span class="input-group-text" id="answer2">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="14" width="10.5" viewBox="0 0 384 512">
+                    <path fill="#c21414"
+                      d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z" />
+                  </svg>
+                </span>
+                <input id="answer2-question6" name="answer2-question6" type="text" class="form-control"
+                  placeholder="Answer 2" aria-describedby="answer2">
+              </div>
+
+              <div class="input-group">
+                <span class="input-group-text" id="answer3">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="14" width="10.5" viewBox="0 0 384 512">
+                    <path fill="#c21414"
+                      d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z" />
+                  </svg>
+                </span>
+                <input id="answer3-question6" name="answer3-question6" type="text" class="form-control"
+                  placeholder="Answer 3" aria-describedby="answer3">
+              </div>
+
+              <div class="input-group">
+                <span class="input-group-text" id="answer4">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="14" width="10.5" viewBox="0 0 384 512">
+                    <path fill="#c21414"
+                      d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z" />
+                  </svg>
+                </span>
+                <input id="answer4-question6" name="answer4-question6" type="text" class="form-control"
+                  placeholder="Answer 4" aria-describedby="answer4">
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Question 7 -->
+        <div class="form-group">
+          <div class="row">
+            <div class="col">
+              <label for="question-7">Question 7</label>
+              <textarea name="question-7" id="question-7" class="form-control" rows="6"></textarea>
+            </div>
+            <div class="col">
+              <label for="answer1-question7" aria-describedby="answer">Answer (True or false format)</label>
+
+              <div class="input-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" id="answer1-question7" name="answer1-question7"
+                    value="True">
+                  <label class="form-check-label" for="answer1-question7">
+                    True
+                  </label>
+                </div>
+              </div>
+
+              <div class="input-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" id="answer2-question7" name="answer1-question7"
+                    value="False">
+                  <label class="form-check-label" for="answer2-question7">
+                    False
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Question 8 -->
+        <div class="form-group">
+          <div class="row">
+            <div class="col">
+              <label for="question-8">Question 8</label>
+              <textarea name="question-8" id="question-8" class="form-control" rows="6"></textarea>
+            </div>
+            <div class="col">
+              <label for="answer1-question8" aria-describedby="answer">Answer (True or false format)</label>
+
+              <div class="input-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="answer1-question8" id="answer1-question8"
+                    value="True">
+                  <label class="form-check-label" id="answer1-question8" name="answer1-question8"
+                    for="answer1-question8">
+                    True
+                  </label>
+                </div>
+              </div>
+              <div class="input-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="answer1-question8" id="answer2-question8"
+                    value="False">
+                  <label class="form-check-label" id="answer2-question8" name="answer2-question8"
+                    for="answer2-question8">
+                    False
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Question 9 -->
+        <div class="form-group">
+          <div class="row">
+            <div class="col">
+              <label for="question-9">Question 9 </label>
+              <textarea name="question-9" id="question-9" class="form-control" rows="6"></textarea>
+            </div>
+            <div class="col">
+              <label for="answer1-question9" aria-describedby="answer">Answer (Fill in the blank format)</label>
+
+              <div class="input-group">
+                <span class="input-group-text" id="answer1">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="14" width="12.25" viewBox="0 0 448 512">
+                    <path fill="#60bc15"
+                      d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
+                  </svg>
+                </span>
+                <input id="answer1-question9" name="answer1-question9" type="text" class="form-control"
+                  placeholder="Answer 1" aria-describedby="answer1">
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Question 10 -->
+        <div class="form-group">
+          <div class="row">
+            <div class="col">
+              <label for="question-10">Question 10</label>
+              <textarea name="question-10" id="question-10" class="form-control" rows="6"></textarea>
+            </div>
+            <div class="col">
+              <label for="answer1-question10" aria-describedby="answer">Answer (Fill in the blank format)</label>
+
+              <div class="input-group">
+                <span class="input-group-text" id="answer1">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="14" width="12.25" viewBox="0 0 448 512">
+                    <path fill="#60bc15"
+                      d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
+                  </svg>
+                </span>
+                <input id="answer1-question10" name="answer1-question10" type="text" class="form-control"
+                  placeholder="Answer 1" aria-describedby="answer1">
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Register Material</button>
+      </form>
+    </div>
+  </div>
+
+</section>
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Individual Report</title>
+    <style>
+        body {
+            width: 1000px;
+            margin: 0 auto;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            margin-top: 60px;
+            border-style: double;
+        }
+
+        .header-container {
+            display: grid;
+            grid-template-columns: auto auto;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .header-container h1 {
+            color: red;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        hr {
+            border: 1px solid red;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .user-info {
+            margin-top: 50px;
+        }
+
+        .user-info p {
+            font-weight: bold;
+        }
+
+        .user-info p span {
+            font-weight: normal;
+        }
+
+        .table-title {
+            margin-top: 50px;
+        }
+
+        .header-container h1,
+        .header-container p,
+        hr {
+            margin-bottom: 0;
+        }
+
+        .report-date {
+            text-align: right;
+            margin-top: 20px;
+            margin-bottom: 8px;
+
+        }
+
+        .user-info {
+            margin-top: 50px;
+        }
+
+        .user-info p {
+            font-weight: bold;
+            margin: 5px 0;
+        }
+
+        .user-info p span {
+            font-weight: normal;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header-container">
+        <h1>Individual Report</h1>
+    </div>
+    <hr>
+
+
+    <div class="user-info">
+        <p>Name<span style="margin-left: 130px;">:</span> <span id="name">{{session['fullname']}}</span></p>
+        <p>Email<span style="margin-left: 131px;">:</span> <span id="email">{{session['email']}}</span></p>
+        <p>User Id<span style="margin-left: 119px;">:</span> <span id="user_id">{{session['user_id']}}</span></p>
+        <p>Completed Modules<span style="margin-left: 21px;">:</span> <span
+                id="completed_modules">{{completed_topic}}/{{total_topic}}</span></p>
+        <p>Duration<span style="margin-left: 108px;">:</span> <span id="user_id">January - February</span></p>
+    </div>
+
+
+    <p class="table-title">User Modules Status:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Module Id</th>
+                <th>Column Title</th>
+                <th>Retake</th>
+                <th>First Score</th>
+                <th>Second Score</th>
+                <th>Status</th>
+                <th>Completed</th>
+                <th>Complete Date</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for report in get_user_report%}
+
+            <tr>
+                <td>{{report['module_id']}}</td>
+                <td>{{report['topic_title']}}</td>
+                {% if report['retake'] == 'false' %}
+                <td style="color: green;">
+                    No
+                </td>
+                {% elif report['retake'] == 'true' %}
+                <td style="color: #17A2B7;">
+                    Yes
+                </td>
+                {% else %}
+                <td>None</td>
+                {% endif %}
+
+                {% if report['first_score'] != 'None' and report['first_score'] >= 8 %}
+                <td style="color: green;">
+                    {{report['first_score']}}0%
+                </td>
+                {% elif report['first_score'] != 'None' and report['first_score'] < 8 %} <td style="color: red;">
+                    {{report['first_score']}}0%
+                    </td>
+                    {% else %}
+                    <td>None</td>
+                    {% endif %}
+
+                    {% if report['second_score'] != 'None' and report['second_score'] >= 8 %}
+                    <td style="color: green;">
+                        {{report['second_score']}}0%
+                    </td>
+                    {% elif report['second_score'] != 'None' and report['second_score'] < 8 %} <td style="color: red;">
+                        {{report['second_score']}}0%
+                        </td>
+                        {% else %}
+                        <td>None</td>
+                        {% endif %}
+
+
+                        {% if report['status'] == 'PASS' %}
+                        <td style="color: green;">
+                            Pass
+                        </td>
+                        {% elif report['status'] == 'FAIL' %}
+                        <td style="color: red;">
+                            Fail
+                        </td>
+                        {% else %}
+                        <td>None</td>
+                        {% endif %}
+
+                        {% if report['completed'] == 'Yes' %}
+                        <td style="color: green;">
+                            Yes
+                        </td>
+                        {% elif report['completed'] == 'No' %}
+                        <td style="color: red;">
+                            No
+                        </td>
+                        {% else %}
+                        <td>None</td>
+                        {% endif %}
+
+                        <td>{{report['completion_date']|format_date}}</td>
+            </tr>
+
+            {%endfor%}
+        </tbody>
+    </table>
+    <p class="report-date">Report Generated Date: {{today}}</p>
+
+
+</body>
+
+</html>
